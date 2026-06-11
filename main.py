@@ -4,13 +4,13 @@ from xml.etree.ElementTree import Element
 from typing import Dict, Any
 import logging
 
-# Configuração de Logs Profissional
+# Configuração de Logs
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class NFeProcessor:
     def __init__(self, namespaces: Dict[str, str] = None):
-        # NFes utilizam namespaces no XML, precisamos mapeá-los
+        # NFes utilizam namespaces no XML
         self.ns = namespaces or {'ns': 'http://www.portalfiscal.inf.br/nfe'}
 
     def _get_text(self, root: Element, xpath: str) -> str:
@@ -29,7 +29,7 @@ class NFeProcessor:
             if infNFe is None:
                 raise ValueError("Estrutura 'infNFe' não encontrada. O arquivo pode não ser uma NFe válida.")
 
-            # Extração de Dados Cadastrais e Financeiros
+            # Extração de Dados
             chave_acesso = infNFe.attrib.get('Id', '').replace('NFe', '')
             ide = infNFe.find('ns:ide', self.ns)
             emit = infNFe.find('ns:emit', self.ns)
@@ -53,11 +53,11 @@ class NFeProcessor:
             raise
 
 
-# Exemplo de Execução
+# Exemplo
 if __name__ == "__main__":
     processor = NFeProcessor()
 
-    # Para testar, basta colocar um arquivo .xml de NFe real ou mockado na mesma pasta
+    # Para testar basta colocar um arquivo .xml de NFe na mesma pasta
     xml_teste = "NFe_assinada.xml"
 
     if os.path.exists(xml_teste):
